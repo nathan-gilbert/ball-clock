@@ -19,6 +19,10 @@ func main() {
 		-mode2 X [Y]
 	*/
 	options := os.Args[1:]
+	if len(options) < 1 {
+		fmt.Println("Not enough arguments.")
+		os.Exit(0)
+	}
 	fmt.Println(options)
 
 	if strings.Compare(options[0], "-mode1") == 0 {
