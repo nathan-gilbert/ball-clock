@@ -9,8 +9,8 @@ import (
 
 //classes
 // balls
-// queues
-// the simulator [maybe overkill]
+// the clock
+// a way to advance time (probably a method on the clock)
 
 func main() {
 	/*
