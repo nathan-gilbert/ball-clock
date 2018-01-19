@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+//classes
+// balls
+// queues
+// the simulator [maybe overkill]
+
 func main() {
 	/*
 		arguments:
