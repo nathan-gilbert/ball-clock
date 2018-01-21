@@ -32,6 +32,10 @@ func mode1(nBalls int) {
 //TODO implement mode2
 func mode2(nBalls int, nMinutes int) ClockState {
 	state := initClockState(nBalls)
+	//setup the main queue
+	for i := 1; i < nBalls; i++ {
+		state.Main = append(state.Main, i)
+	}
 	return state
 }
 
@@ -57,6 +61,10 @@ func main() {
 	nBalls, err := strconv.Atoi(options[1])
 	if err != nil {
 		log.Fatal("Error converting nBalls to integer.")
+	}
+	//from the implementation specifications...
+	if nBalls < 27 || nBalls > 127 {
+		log.Fatal("Number of balls must be between 27 and 127 (inclusive)")
 	}
 
 	ms := 0
