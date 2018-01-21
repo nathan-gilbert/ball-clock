@@ -10,10 +10,14 @@ type ClockState struct {
 
 //Init -- initializes the state of the clock
 func (cs *ClockState) Init(nBalls int) {
-	var state ClockState
+	cs.Min = []int{}
+	cs.FiveMin = []int{}
+	cs.Hour = []int{}
+	cs.Main = []int{}
+
 	//setup the main queue, assuming in order starting positions...
 	for i := 1; i <= nBalls; i++ {
-		state.Main = append(state.Main, i)
+		cs.Main = append(cs.Main, i)
 	}
 }
 
@@ -64,4 +68,10 @@ func (cs *ClockState) AddHour(newBall int) {
 	} else {
 		cs.Hour = append(cs.Hour, newBall)
 	}
+}
+
+//IncrementByMinute -- increments the state of the clock by 1 minute
+func (cs *ClockState) IncrementByMinute() {
+	currentBall := cs.PopBall()
+	cs.AddMin(currentBall)
 }

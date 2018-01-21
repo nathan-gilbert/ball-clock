@@ -19,35 +19,24 @@ func timeIt(start time.Time) {
 	fmt.Printf("Completed in %d milliseconds (%.3f seconds)", ms, s)
 }
 
-//TODO increments the clock state by 1 minute
-func incrementState(state ClockState) ClockState {
-	var newState ClockState
-	//take the least recently used ball from the queue and put it
-	//in the minutes
-	currentBall := state.PopBall()
-	//increment by a minute
-	state.AddMin(currentBall)
-	return newState
-}
-
-//TODO implement mode1
 func mode1(nBalls int) {
 	defer timeIt(time.Now())
 	days := 0
 	var state ClockState
+	var initialState ClockState
 	state.Init(nBalls)
+	initialState.Init(nBalls)
 
-	//the first state
-	initialState := state
-	state = incrementState(state)
+	//increment by a minute to start off
+	minutes := 1
+	state.IncrementByMinute()
 	//keep iterating while the current state is not the same as the initial state
-	minutes := 0
-	for !reflect.DeepEqual(initialState, state) { //reflection can be inefficient, write own
-		state = incrementState(state)
+	for !reflect.DeepEqual(initialState, state) { //reflection can be inefficient, maybe write own check
+		state.IncrementByMinute()
 		minutes++
 	}
 	days = minutes / (60 * 24)
-	fmt.Printf("%d balls cycle after %d days.", nBalls, days)
+	fmt.Printf("%d balls cycle after %d days.\n", nBalls, days)
 }
 
 //TODO implement mode2
@@ -58,7 +47,7 @@ func mode2(nBalls int, nMinutes int) {
 
 	//simulate for nMinutes...
 	for i := 0; i < nMinutes; i++ {
-		state = incrementState(state)
+		state.IncrementByMinute()
 	}
 
 	//get the results

@@ -24,24 +24,25 @@ func TestParseArgs(t *testing.T) {
 
 func TestInitState(t *testing.T) {
 	nBalls := 30
-	initState := initClockState(nBalls)
+	var state ClockState
+	state.Init(nBalls)
 	//check sizes
-	if len(initState.Main) != nBalls {
-		t.Errorf("Main queue was incorrect, got: %d, want: %d.", len(initState.Main), nBalls)
+	if len(state.Main) != nBalls {
+		t.Errorf("Main queue was incorrect, got: %d, want: %d.", len(state.Main), nBalls)
 	}
-	//should be in order initially
+	//assumption: should be in order at first
 	for i := 1; i <= nBalls; i++ {
-		if initState.Main[i-1] != i {
-			t.Errorf("initState[%d] is %d and not %d", i, initState.Main[i], i)
+		if state.Main[i-1] != i {
+			t.Errorf("state[%d] is %d and not %d", i, state.Main[i], i)
 		}
 	}
 }
 
-func TestRemoveBall(t *testing.T) {
+func TestPopBall(t *testing.T) {
 	nBalls := 27
-	state := initClockState(nBalls)
-	currentBall := state.Main[0]
-	state.Main = RemoveBall(state.Main, 0)
+	var state ClockState
+	state.Init(nBalls)
+	currentBall := state.PopBall()
 	if currentBall != 1 {
 		t.Errorf("currentBall != %d but is instead %d", 0, currentBall)
 	}
@@ -52,7 +53,8 @@ func TestRemoveBall(t *testing.T) {
 
 func TestAddMin(t *testing.T) {
 	nBalls := 27
-	state := initClockState(nBalls)
+	var state ClockState
+	state.Init(nBalls)
 	currentBall := state.PopBall()
 	state.AddMin(currentBall)
 
@@ -62,7 +64,8 @@ func TestAddMin(t *testing.T) {
 }
 func TestAddFiveMin(t *testing.T) {
 	nBalls := 27
-	state := initClockState(nBalls)
+	var state ClockState
+	state.Init(nBalls)
 	for i := 0; i < 5; i++ {
 		currentBall := state.PopBall()
 		state.AddMin(currentBall)
@@ -76,7 +79,8 @@ func TestAddFiveMin(t *testing.T) {
 }
 func TestAddHour(t *testing.T) {
 	nBalls := 27
-	state := initClockState(nBalls)
+	var state ClockState
+	state.Init(nBalls)
 	for i := 0; i < 60; i++ {
 		currentBall := state.PopBall()
 		state.AddMin(currentBall)
@@ -91,10 +95,10 @@ func TestAddHour(t *testing.T) {
 		t.Errorf("Length of hour queue is %d and not 1", len(state.Hour))
 	}
 }
-
 func TestFullDay(t *testing.T) {
 	nBalls := 27
-	state := initClockState(nBalls)
+	var state ClockState
+	state.Init(nBalls)
 	for i := 0; i < 1440; i++ {
 		currentBall := state.PopBall()
 		state.AddMin(currentBall)
