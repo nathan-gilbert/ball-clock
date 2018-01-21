@@ -39,7 +39,6 @@ func mode1(nBalls int) {
 	fmt.Printf("%d balls cycle after %d days.\n", nBalls, days)
 }
 
-//TODO implement mode2
 func mode2(nBalls int, nMinutes int) {
 	defer timeIt(time.Now())
 	var state ClockState

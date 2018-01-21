@@ -62,6 +62,7 @@ func TestAddMin(t *testing.T) {
 		t.Errorf("minutes queue length is %d and not 1", len(state.Min))
 	}
 }
+
 func TestAddFiveMin(t *testing.T) {
 	nBalls := 27
 	var state ClockState
@@ -77,6 +78,7 @@ func TestAddFiveMin(t *testing.T) {
 		t.Errorf("Length of five minutes queue is %d and not 1", len(state.FiveMin))
 	}
 }
+
 func TestAddHour(t *testing.T) {
 	nBalls := 27
 	var state ClockState
@@ -95,6 +97,7 @@ func TestAddHour(t *testing.T) {
 		t.Errorf("Length of hour queue is %d and not 1", len(state.Hour))
 	}
 }
+
 func TestFullDay(t *testing.T) {
 	nBalls := 27
 	var state ClockState
