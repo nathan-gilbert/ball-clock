@@ -32,6 +32,11 @@ func mode1(nBalls int) {
 //TODO implement mode2
 func mode2(nBalls int, nMinutes int) ClockState {
 	state := initClockState(nBalls)
+	return state
+}
+
+func initClockState(nBalls int) ClockState {
+	var state ClockState
 	//setup the main queue
 	for i := 1; i <= nBalls; i++ {
 		state.Main = append(state.Main, i)
@@ -39,9 +44,30 @@ func mode2(nBalls int, nMinutes int) ClockState {
 	return state
 }
 
-func initClockState(nBalls int) ClockState {
-	var state ClockState
-	return state
+//check the cmdline args and modes
+func parseArgs(options []string) (int, int) {
+	if len(options) < 1 {
+		log.Fatal("Not enough arguments.")
+	}
+
+	nBalls, err := strconv.Atoi(options[1])
+	if err != nil {
+		log.Fatal("Error converting nBalls to integer.")
+	}
+
+	//from the implementation specifications...
+	if nBalls < 27 || nBalls > 127 {
+		log.Fatal("Number of balls must be between 27 and 127 (inclusive)")
+	}
+
+	nMinutes := 0
+	if strings.Compare(options[0], "-mode2") == 0 {
+		nMinutes, err = strconv.Atoi(options[2])
+		if err != nil {
+			log.Fatal("Error converting nMinutes to integer.")
+		}
+	}
+	return nBalls, nMinutes
 }
 
 func main() {
@@ -51,21 +77,7 @@ func main() {
 		-mode2 X [Y]
 	*/
 	options := os.Args[1:]
-	if len(options) < 1 {
-		fmt.Println("Not enough arguments.")
-		os.Exit(0)
-	}
-	fmt.Println(options)
-
-	//check the cmdline args and modes
-	nBalls, err := strconv.Atoi(options[1])
-	if err != nil {
-		log.Fatal("Error converting nBalls to integer.")
-	}
-	//from the implementation specifications...
-	if nBalls < 27 || nBalls > 127 {
-		log.Fatal("Number of balls must be between 27 and 127 (inclusive)")
-	}
+	nBalls, nMinutes := parseArgs(options)
 
 	ms := 0
 	s := 0.0
@@ -76,10 +88,6 @@ func main() {
 		ms = int(elapsed / time.Millisecond)
 		s = float64(elapsed / time.Nanosecond)
 	} else if strings.Compare(options[0], "-mode2") == 0 {
-		nMinutes, err := strconv.Atoi(options[2])
-		if err != nil {
-			log.Fatal("Error converting nMinutes to integer.")
-		}
 		start := time.Now()
 		finalState := mode2(nBalls, nMinutes)
 		elapsed := time.Since(start)
