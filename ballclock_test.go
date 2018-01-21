@@ -37,14 +37,18 @@ func TestInitState(t *testing.T) {
 	}
 }
 
-func TestTick(t *testing.T) {
-
+func TestIncrementMinutes(t *testing.T) {
+}
+func TestIncrementFiveMinutes(t *testing.T) {
+}
+func TestIncrementHours(t *testing.T) {
 }
 
 func TestMode1(t *testing.T) {
-
+	//var options1 = []string{"-mode1", "30"}
+	//var options2 = []string{"-mode1", "45"}
 }
 
 func TestMode2(t *testing.T) {
-
+	//var options = []string{"-mode2", "30", "325"}
 }
