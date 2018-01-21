@@ -37,16 +37,77 @@ func TestInitState(t *testing.T) {
 	}
 }
 
-func TestAddMin(t *testing.T) {
-	nBalls := 30
+func TestRemoveBall(t *testing.T) {
+	nBalls := 27
 	state := initClockState(nBalls)
-	currentBall, newMain := RemoveIndex(state.Main, 0)
-	state.Main = newMain
+	currentBall := state.Main[0]
+	state.Main = RemoveBall(state.Main, 0)
+	if currentBall != 1 {
+		t.Errorf("currentBall != %d but is instead %d", 0, currentBall)
+	}
+	if len(state.Main) != 26 {
+		t.Errorf("length of main queue is %d", len(state.Main))
+	}
+}
+
+func TestAddMin(t *testing.T) {
+	nBalls := 27
+	state := initClockState(nBalls)
+	currentBall := state.PopBall()
 	state.AddMin(currentBall)
+
+	if len(state.Min) != 1 {
+		t.Errorf("minutes queue length is %d and not 1", len(state.Min))
+	}
 }
-func TestIncrementFiveMinutes(t *testing.T) {
+func TestAddFiveMin(t *testing.T) {
+	nBalls := 27
+	state := initClockState(nBalls)
+	for i := 0; i < 5; i++ {
+		currentBall := state.PopBall()
+		state.AddMin(currentBall)
+	}
+	if len(state.Min) != 0 {
+		t.Errorf("Length of minutes queue is %d and not 0", len(state.Min))
+	}
+	if len(state.FiveMin) != 1 {
+		t.Errorf("Length of five minutes queue is %d and not 1", len(state.FiveMin))
+	}
 }
-func TestIncrementHours(t *testing.T) {
+func TestAddHour(t *testing.T) {
+	nBalls := 27
+	state := initClockState(nBalls)
+	for i := 0; i < 60; i++ {
+		currentBall := state.PopBall()
+		state.AddMin(currentBall)
+	}
+	if len(state.Min) != 0 {
+		t.Errorf("Length of minutes queue is %d and not 0", len(state.Min))
+	}
+	if len(state.FiveMin) != 0 {
+		t.Errorf("Length of five minutes queue is %d and not 0", len(state.FiveMin))
+	}
+	if len(state.Hour) != 1 {
+		t.Errorf("Length of hour queue is %d and not 1", len(state.Hour))
+	}
+}
+
+func TestFullDay(t *testing.T) {
+	nBalls := 27
+	state := initClockState(nBalls)
+	for i := 0; i < 1440; i++ {
+		currentBall := state.PopBall()
+		state.AddMin(currentBall)
+	}
+	if len(state.Min) != 0 {
+		t.Errorf("Length of minutes queue is %d and not 0", len(state.Min))
+	}
+	if len(state.FiveMin) != 0 {
+		t.Errorf("Length of five minutes queue is %d and not 0", len(state.FiveMin))
+	}
+	if len(state.Hour) != 0 {
+		t.Errorf("Length of hour queue is %d and not 0", len(state.Hour))
+	}
 }
 
 func TestMode1(t *testing.T) {
