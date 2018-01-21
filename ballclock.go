@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -36,7 +37,18 @@ func incrementState(state ClockState) ClockState {
 func mode1(nBalls int) {
 	defer timeIt(time.Now())
 	days := 0
-	//state := initClockState(nBalls)
+	state := initClockState(nBalls)
+	//the first state
+	initialState := state
+	state = incrementState(state)
+	//while the current state is not the same as the initial state
+	//keep interating
+	minutes := 0
+	for !reflect.DeepEqual(initialState, state) { //reflection can be inefficent, write own
+		state = incrementState(state)
+		minutes++
+	}
+	days = minutes / (60 * 24)
 	fmt.Printf("%d balls cycle after %d days.", nBalls, days)
 }
 
