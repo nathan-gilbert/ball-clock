@@ -33,7 +33,7 @@ func mode1(nBalls int) {
 func mode2(nBalls int, nMinutes int) ClockState {
 	state := initClockState(nBalls)
 	//setup the main queue
-	for i := 1; i < nBalls; i++ {
+	for i := 1; i <= nBalls; i++ {
 		state.Main = append(state.Main, i)
 	}
 	return state
