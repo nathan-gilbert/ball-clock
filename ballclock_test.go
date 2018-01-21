@@ -121,4 +121,5 @@ func TestMode1(t *testing.T) {
 
 func TestMode2(t *testing.T) {
 	mode2(30, 325)
+	mode2(30, 64800) //45 days...should be back at init
 }
