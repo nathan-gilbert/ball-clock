@@ -23,7 +23,7 @@ func timeIt(start time.Time) {
 	elapsed := time.Since(start)
 	ms := int64(elapsed) / int64(time.Millisecond)
 	s := float64(elapsed) / float64(time.Nanosecond)
-	fmt.Printf("Completed in %d milliseconds (%0.3f seconds)", ms, s)
+	fmt.Printf("Completed in %d milliseconds (%.3f seconds)", ms, s)
 }
 
 //TODO increments the clock state by 1 minute
