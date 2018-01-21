@@ -115,10 +115,10 @@ func TestFullDay(t *testing.T) {
 }
 
 func TestMode1(t *testing.T) {
-	//var options1 = []string{"-mode1", "30"}
-	//var options2 = []string{"-mode1", "45"}
+	mode1(30)
+	mode1(45)
 }
 
 func TestMode2(t *testing.T) {
-	//var options = []string{"-mode2", "30", "325"}
+	mode2(30, 325)
 }

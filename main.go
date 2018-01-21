@@ -15,8 +15,8 @@ import (
 func timeIt(start time.Time) {
 	elapsed := time.Since(start)
 	ms := int64(elapsed) / int64(time.Millisecond)
-	s := float64(elapsed) / float64(time.Nanosecond)
-	fmt.Printf("Completed in %d milliseconds (%.3f seconds)", ms, s)
+	s := float64(elapsed) / float64(time.Second)
+	fmt.Printf("Completed in %d milliseconds (%.3f seconds)\n", ms, s)
 }
 
 func mode1(nBalls int) {
@@ -27,7 +27,7 @@ func mode1(nBalls int) {
 	state.Init(nBalls)
 	initialState.Init(nBalls)
 
-	//increment by a minute to start off
+	//bootstrap by a minute to start off
 	minutes := 1
 	state.IncrementByMinute()
 	//keep iterating while the current state is not the same as the initial state

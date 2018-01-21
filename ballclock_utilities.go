@@ -1,9 +1,9 @@
 package main
 
-//RemoveBall -- removes a ball from a queue and right shifts all
+//RemoveIndex -- removes a ball from a queue and right shifts all
 //following elements. Returns value at index as well as new queue
 //with index removed
-func RemoveBall(queue []int, index int) []int { //TODO maybe this should go on state struct?
+func RemoveIndex(queue []int, index int) []int { //TODO maybe this should go on state struct?
 	return append(queue[:index], queue[index+1:]...)
 }
 

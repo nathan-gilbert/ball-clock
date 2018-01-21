@@ -24,7 +24,7 @@ func (cs *ClockState) Init(nBalls int) {
 //PopBall -- pops the next ball off of the front the main queue
 func (cs *ClockState) PopBall() int {
 	nextBall := cs.Main[0]
-	cs.Main = RemoveBall(cs.Main, 0)
+	cs.Main = RemoveIndex(cs.Main, 0)
 	return nextBall
 }
 
