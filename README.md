@@ -28,13 +28,17 @@ The first mode takes a single parameter specifying the number of balls and repor
 
 An input of 30 yields the following output: 
 
+````sh
 30 balls cycle after 15 days.
 Completed in x milliseconds (y.yyy seconds)
+````
 
 An input of 45 yields the following output:
 
+````sh
 45 balls cycle after 378 days.
 Completed in x milliseconds (y.yyy seconds)
+````
 
 ### Mode 2 (Clock State)
 

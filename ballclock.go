@@ -12,27 +12,50 @@ import (
 
 //ClockState -- the current state of the ball clock
 type ClockState struct {
-	Min     []int
-	FiveMin []int
-	Hour    []int
-	Main    []int
+	Min     []int //holds 4 balls
+	FiveMin []int //holds 11 balls
+	Hour    []int //holds 11 balls, but always contains 1 (so count starts @ 1)
+	Main    []int //holds at most 'nBalls'
 }
 
-//TODO palante increments the clock state by 1 minute
-func palante(state ClockState) ClockState {
+//timer function to use with defer
+func timeIt(start time.Time) {
+	elapsed := time.Since(start)
+	ms := int64(elapsed) / int64(time.Millisecond)
+	s := float64(elapsed) / float64(time.Nanosecond)
+	fmt.Printf("Completed in %d milliseconds (%0.3f seconds)", ms, s)
+}
+
+//TODO increments the clock state by 1 minute
+func incrementState(state ClockState) ClockState {
 	var newState ClockState
 	return newState
 }
 
 //TODO implement mode1
 func mode1(nBalls int) {
+	defer timeIt(time.Now())
+	days := 0
 	//state := initClockState(nBalls)
+	fmt.Printf("%d balls cycle after %d days.", nBalls, days)
 }
 
 //TODO implement mode2
-func mode2(nBalls int, nMinutes int) ClockState {
+func mode2(nBalls int, nMinutes int) {
+	defer timeIt(time.Now())
 	state := initClockState(nBalls)
-	return state
+
+	//simulate for nMinutes...
+	for i := 0; i < nMinutes; i++ {
+		state = incrementState(state)
+	}
+
+	//get the results
+	jsonResult, err := json.Marshal(state)
+	if err != nil {
+		log.Fatal("unable to convert ClockState to JSON")
+	}
+	fmt.Printf("%s\n", jsonResult)
 }
 
 func initClockState(nBalls int) ClockState {
@@ -79,28 +102,12 @@ func main() {
 	options := os.Args[1:]
 	nBalls, nMinutes := parseArgs(options)
 
-	ms := 0
-	s := 0.0
 	if strings.Compare(options[0], "-mode1") == 0 {
-		start := time.Now()
 		mode1(nBalls)
-		elapsed := time.Since(start)
-		ms = int(elapsed / time.Millisecond)
-		s = float64(elapsed / time.Nanosecond)
 	} else if strings.Compare(options[0], "-mode2") == 0 {
-		start := time.Now()
-		finalState := mode2(nBalls, nMinutes)
-		elapsed := time.Since(start)
-		ms = int(elapsed / time.Millisecond)
-		s = float64(elapsed / time.Nanosecond)
-		jsonResult, err := json.Marshal(finalState)
-		if err != nil {
-			log.Fatal("unable to convert ClockState to JSON")
-		}
-		fmt.Printf("%s\n", jsonResult)
+		mode2(nBalls, nMinutes)
 	} else {
 		fmt.Println("Unknown option. Must be -mode1 or -mode2")
 		os.Exit(1)
 	}
-	fmt.Printf("Completed in %d milliseconds (%2.3f seconds)", ms, s)
 }

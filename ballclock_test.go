@@ -36,3 +36,15 @@ func TestInitState(t *testing.T) {
 		}
 	}
 }
+
+func TestTick(t *testing.T) {
+
+}
+
+func TestMode1(t *testing.T) {
+
+}
+
+func TestMode2(t *testing.T) {
+
+}
