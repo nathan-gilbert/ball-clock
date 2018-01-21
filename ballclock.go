@@ -19,6 +19,20 @@ type ClockState struct {
 	Main    []int //holds at most 'nBalls'
 }
 
+//AddMin -- adds a new ball to the minute queue
+func (cs ClockState) AddMin(newBall int) {
+	if len(cs.Min) == 4 {
+		//clear array, drop current 4 balls back into queue in reverse order
+		oldMinQueue := ReverseQueue(cs.Min)
+		//clear minute queue
+		cs.Min = []int{}
+		//append the balls from Min onto Main in reverse order
+		cs.Main = append(cs.Main, oldMinQueue...)
+		//add new ball to FiveMin
+		cs.FiveMin = append(cs.FiveMin, newBall)
+	}
+}
+
 //timer function to use with defer
 func timeIt(start time.Time) {
 	elapsed := time.Since(start)
@@ -30,6 +44,12 @@ func timeIt(start time.Time) {
 //TODO increments the clock state by 1 minute
 func incrementState(state ClockState) ClockState {
 	var newState ClockState
+
+	//take the least recently used ball from the queue and put it
+	//in the minutes
+	currentBall, newMain := RemoveIndex(state.Main, 0)
+	state.Main = newMain
+
 	return newState
 }
 

@@ -37,7 +37,12 @@ func TestInitState(t *testing.T) {
 	}
 }
 
-func TestIncrementMinutes(t *testing.T) {
+func TestAddMin(t *testing.T) {
+	nBalls := 30
+	state := initClockState(nBalls)
+	currentBall, newMain := RemoveIndex(state.Main, 0)
+	state.Main = newMain
+	state.AddMin(currentBall)
 }
 func TestIncrementFiveMinutes(t *testing.T) {
 }
