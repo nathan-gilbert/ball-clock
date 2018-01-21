@@ -53,43 +53,38 @@ func main() {
 	}
 	fmt.Println(options)
 
-	if strings.Compare(options[0], "-mode1") == 0 {
-		nBalls, err := strconv.Atoi(options[2])
-		if err != nil {
-			log.Fatal("Error converting nBalls to integer.")
-		}
+	//check the cmdline args and modes
+	nBalls, err := strconv.Atoi(options[1])
+	if err != nil {
+		log.Fatal("Error converting nBalls to integer.")
+	}
 
+	ms := 0
+	s := 0.0
+	if strings.Compare(options[0], "-mode1") == 0 {
 		start := time.Now()
 		mode1(nBalls)
 		elapsed := time.Since(start)
-
-		ms := int64(elapsed / time.Millisecond)
-		s := float64(elapsed / time.Nanosecond)
-		fmt.Printf("Completed in %d milliseconds (%2.3f seconds)", ms, s)
+		ms = int(elapsed / time.Millisecond)
+		s = float64(elapsed / time.Nanosecond)
 	} else if strings.Compare(options[0], "-mode2") == 0 {
-		nBalls, err := strconv.Atoi(options[2])
-		if err != nil {
-			log.Fatal("Error converting nBalls to integer.")
-		}
-		nMinutes, err := strconv.Atoi(options[3])
+		nMinutes, err := strconv.Atoi(options[2])
 		if err != nil {
 			log.Fatal("Error converting nMinutes to integer.")
 		}
-
 		start := time.Now()
 		finalState := mode2(nBalls, nMinutes)
 		elapsed := time.Since(start)
-
-		ms := int64(elapsed / time.Millisecond)
-		s := float64(elapsed / time.Nanosecond)
+		ms = int(elapsed / time.Millisecond)
+		s = float64(elapsed / time.Nanosecond)
 		jsonResult, err := json.Marshal(finalState)
 		if err != nil {
 			log.Fatal("unable to convert ClockState to JSON")
 		}
 		fmt.Printf("%s\n", jsonResult)
-		fmt.Printf("Completed in %d milliseconds (%2.3f seconds)", ms, s)
 	} else {
 		fmt.Println("Unknown option. Must be -mode1 or -mode2")
 		os.Exit(1)
 	}
+	fmt.Printf("Completed in %d milliseconds (%2.3f seconds)", ms, s)
 }
