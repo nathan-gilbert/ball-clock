@@ -60,4 +60,5 @@ go build
 
 ```sh
 ball-clock -mode1 30
+ball-clock -mode2 30 378
 ```
