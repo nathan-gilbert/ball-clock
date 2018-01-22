@@ -63,9 +63,15 @@ func parseArgs(options []string) (int, int) {
 		log.Fatal("Not enough arguments.")
 	}
 
-	nBalls, err := strconv.Atoi(options[1])
-	if err != nil {
-		log.Fatal("Error converting nBalls to integer.")
+	var nBalls int
+	var err error
+	if len(options) > 1 {
+		nBalls, err = strconv.Atoi(options[1])
+		if err != nil {
+			log.Fatal("Error converting nBalls to integer.")
+		}
+	} else {
+		log.Fatal("Not enough arguments.")
 	}
 
 	//from the implementation specifications...assumed inclusive
@@ -75,9 +81,15 @@ func parseArgs(options []string) (int, int) {
 
 	nMinutes := 0
 	if strings.Compare(options[0], "-mode2") == 0 {
-		nMinutes, err = strconv.Atoi(options[2])
-		if err != nil {
-			log.Fatal("Error converting nMinutes to integer.")
+		if len(options) > 2 {
+			nMinutes, err = strconv.Atoi(options[2])
+			if err != nil {
+				log.Fatal("Error converting nMinutes to integer.")
+			}
+		} else {
+			//set default to 1 day.
+			fmt.Println("No minutes argument supplied, setting to 1440.")
+			nMinutes = 1440
 		}
 	}
 	return nBalls, nMinutes
