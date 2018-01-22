@@ -1,6 +1,6 @@
 package main
 
-//RemoveIndex -- removes a ball from a queue and right shifts all following elements.
+//RemoveIndex -- removes a item from an array and right shifts all following elements.
 func RemoveIndex(queue []int, index int) []int {
 	return append(queue[:index], queue[index+1:]...)
 }
