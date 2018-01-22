@@ -1,13 +1,11 @@
 package main
 
-//RemoveIndex -- removes a ball from a queue and right shifts all
-//following elements. Returns value at index as well as new queue
-//with index removed
+//RemoveIndex -- removes a ball from a queue and right shifts all following elements.
 func RemoveIndex(queue []int, index int) []int {
 	return append(queue[:index], queue[index+1:]...)
 }
 
-//ReverseQueue -- simple reversing of the balls in a given array
+//ReverseQueue -- simple reversal of an array
 func ReverseQueue(queue []int) []int {
 	for i := 0; i < len(queue)/2; i++ {
 		j := len(queue) - i - 1

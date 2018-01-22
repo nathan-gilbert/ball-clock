@@ -15,7 +15,7 @@ func (cs *ClockState) Init(nBalls int) {
 	cs.Hour = []int{}
 	cs.Main = []int{}
 
-	//setup the main queue, assuming in order starting positions...
+	//setup the main queue, assuming starting positions are in order...
 	for i := 1; i <= nBalls; i++ {
 		cs.Main = append(cs.Main, i)
 	}
